@@ -22,7 +22,7 @@ function AppRouterProvider() {
   ]);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in
         const { uid, email, displayName } = user;
@@ -32,6 +32,8 @@ function AppRouterProvider() {
         dispatch(unsetUser());
       }
     });
+
+    return () => unsubscribe();
   }, []);
 
   return <RouterProvider router={appRouter} />;

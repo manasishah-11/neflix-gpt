@@ -17,7 +17,7 @@ export function validateAuthForm(showSignInForm, email, password, name) {
   }
 
   if (!showSignInForm) {
-    const isValidFullName = /^[A-Z][a-z]+(?: [A-Z][a-z]+)+$/.test(name);
+    const isValidFullName = /^[A-Z][a-z0-9]+(?: [A-Z][a-z0-9]+)+$/.test(name);
     if (!isValidFullName) {
       errors[2] = "Full name should have 4 or more characters";
     }
