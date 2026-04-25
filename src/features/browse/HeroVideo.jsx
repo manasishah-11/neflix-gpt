@@ -21,18 +21,20 @@ function HeroVideo() {
             src={`https://www.youtube.com/embed/${videoUrl}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=${videoUrl}`}
             title="YouTube video player"
             referrerPolicy="strict-origin-when-cross-origin"
-            className="w-full aspect-video opacity-55"
+            className="w-full aspect-square sm:aspect-video opacity-55"
           ></iframe>
         ) : (
           <div className="w-full aspect-video" />
         )}
 
         {/* Movie Details */}
-        <div className="absolute inset-0 top-44 px-4">
-          <p className="text-white text-4xl font-bold">
+        <div className="absolute inset-0 top-20 sm:top-44 px-4">
+          <p className="text-white text-2xl sm:text-4xl font-bold">
             {original_title ?? ""}
           </p>
-          <p className="text-white max-w-[45%]">{overview}</p>
+          <p className="text-white max-w-[85%] sm:max-w-[45%] text-sm sm:text-base">
+            {overview}
+          </p>
           <div className="space-x-2 mt-5">
             <button className="bg-white text-black w-24 rounded-md py-1.5 text-sm hover:opacity-80 transition-colors duration-200">
               ▶ Play

@@ -23,7 +23,7 @@ function Browse() {
         <Header />
       </div>
       <HeroVideo />
-      <div className="-mt-64 relative px-4 pb-4">
+      <div className="-mt-14 sm:-mt-64 relative px-4 pb-4">
         <MovieList title="Popular" movies={popularMovies} />
         <MovieList title="Top Rated" movies={topRatedMovies} />
         <MovieList title="Now Playing" movies={nowPlayingMovies} />

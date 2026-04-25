@@ -54,21 +54,24 @@ function Header() {
             className="bg-gray-400/80 hover:bg-gray-400/70 transition-colors duration-200 outline-none px-4 py-1 rounded-md text-sm mr-2 text-white"
             onClick={handleSearchClick}
           >
-            ✨ AI Search
+            ✨ <span className="hidden sm:inline-block">AI Search</span>
           </button>
         ) : (
           <button
             className="bg-gray-400/80 hover:bg-gray-400/70 transition-colors duration-200 outline-none px-4 py-1 rounded-md text-sm mr-2 text-white"
             onClick={handleBrowseClick}
           >
-            🌐 Browse
+            🌐 <span className="hidden sm:inline-block">Browse</span>
           </button>
         )}
         <button
           className="bg-transparent outline-none flex gap-2 items-center"
           onClick={handleSignout}
         >
-          <span className="text-white text-xs">Signout</span>
+          <span className="text-white text-xs hidden sm:inline-block">
+            Signout
+          </span>
+          <span className="text-white text-xs inline-block sm:hidden">➜]</span>
           <img src={USER_AVATAR_URL} alt="user-icon" />
         </button>
       </div>

@@ -28,8 +28,8 @@ function Search() {
         <Header />
       </div>
       <div className="pt-20 flex justify-center">
-        <div className="w-1/2">
-          <form onSubmit={handleGptSearch}>
+        <div className="w-full sm:w-1/2">
+          <form onSubmit={handleGptSearch} className="px-4 sm:px-0">
             <div className="flex gap-2 items-center">
               <div className="flex-1">
                 <input
@@ -49,7 +49,7 @@ function Search() {
         </div>
       </div>
       <div className="flex justify-center pt-6 py-4">
-        <div className="grid grid-cols-4 gap-2 w-max">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 w-max">
           {movies.map((movie) => (
             <MovieCard
               key={movie.id}
