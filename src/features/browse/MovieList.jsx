@@ -1,5 +1,5 @@
 import React from "react";
-import MovieCard from "./MovieCard";
+import MovieCard from "../../common/components/MovieCard";
 
 function MovieList({ title, movies }) {
   return (
@@ -9,7 +9,7 @@ function MovieList({ title, movies }) {
         {(movies || []).map((movie) => (
           <MovieCard
             key={movie.id}
-            title={movie.original_title}
+            title={movie.title}
             backdrop_path={movie.backdrop_path}
           />
         ))}

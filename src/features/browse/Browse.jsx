@@ -18,7 +18,7 @@ function Browse() {
   useUpcomingMovies();
 
   return (
-    <div className="bg-black min-h-screen">
+    <div className="bg-black min-h-screen no-scrollbar">
       <div className="absolute z-10">
         <Header />
       </div>

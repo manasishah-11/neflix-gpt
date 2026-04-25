@@ -6,6 +6,7 @@ import { auth } from "../utils/firebase";
 import { useDispatch } from "react-redux";
 import { setUser, unsetUser } from "../store/userSlice";
 import Browse from "../../features/browse/Browse";
+import Search from "../../features/ai_search/Search";
 
 function AppRouterProvider() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function AppRouterProvider() {
       path: "/browse",
       element: <Browse />,
     },
+    { path: "/search", element: <Search /> },
   ]);
 
   useEffect(() => {
