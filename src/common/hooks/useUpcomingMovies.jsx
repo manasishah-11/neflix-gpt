@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
 import { setUpcomingMovies } from "../store/moviesSlice";
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const useUpcomingMovies = () => {
   const dispatch = useDispatch();
@@ -15,12 +15,14 @@ const useUpcomingMovies = () => {
     const apiData = await apiRead.json();
 
     dispatch(setUpcomingMovies(apiData?.results || []));
+    return apiData?.results || [];
   };
 
-  useEffect(() => {
-    if (!!upcomingMovies && upcomingMovies.length > 0) return;
-    getUpcomingMovies();
-  }, []);
+  return useQuery({
+    queryKey: ["upcoming-movies"],
+    queryFn: getUpcomingMovies,
+    enabled: !upcomingMovies || upcomingMovies.length === 0,
+  });
 };
 
 export default useUpcomingMovies;

@@ -1,26 +1,30 @@
 import React, { useRef, useState } from "react";
 import Header from "../../common/components/Header";
-import { recommendationPromptResponse } from "../../common/utils/openai";
 import useSearchMoviesByTitle from "../../common/hooks/useSearchMoviesByTitle";
 import MovieCard from "../../common/components/MovieCard";
+import MovieCardShimmer from "../../common/components/MovieCardShimmer";
+import useRecommendMovies from "../../common/hooks/useRecommendMovies";
+import EmptyState from "./EmptyState";
 
 function Search() {
   const searchTextRef = useRef(null);
   const [movieTitles, setMovieTitles] = useState([]);
 
-  const movies = useSearchMoviesByTitle(movieTitles);
+  const { data: movies = [], isFetching: loadingMovieDetails } =
+    useSearchMoviesByTitle(movieTitles);
+  const { mutate: getAiPromptResults, isPending } =
+    useRecommendMovies(setMovieTitles);
 
   async function handleGptSearch(e) {
     e.preventDefault();
     if (!!searchTextRef?.current && !!searchTextRef.current?.value) {
-      const movieTitlesFromOpenAi = await recommendationPromptResponse(
-        searchTextRef.current.value,
-      );
-      setMovieTitles(movieTitlesFromOpenAi.split(", "));
+      getAiPromptResults(searchTextRef?.current?.value);
     } else {
       console.log("HERE");
     }
   }
+
+  const isLoading = loadingMovieDetails || isPending;
 
   return (
     <div className="relative bg-black min-h-screen">
@@ -42,21 +46,26 @@ function Search() {
                 type="submit"
                 className="bg-red-700 hover:bg-red-600 focus:border-2 focus:border-white text-white rounded-md text-xs font-semibold px-3 py-2.5 transition-colors duration-200 outline-none"
               >
-                Recommend
+                {isLoading ? "Recommending..." : "Recommend"}
               </button>
             </div>
           </form>
         </div>
       </div>
-      <div className="flex justify-center pt-6 py-4">
+      <div className="flex justify-center pt-6 pb-4">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 w-max">
-          {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              title={movie.title}
-              backdrop_path={movie.backdrop_path}
-            />
-          ))}
+          {movies.length === 0 && !isLoading && <EmptyState />}
+          {isLoading
+            ? Array.from({ length: 16 }).map((_, index) => (
+                <MovieCardShimmer key={index} />
+              ))
+            : movies.map((movie) => (
+                <MovieCard
+                  key={movie.id}
+                  title={movie.title}
+                  backdrop_path={movie.backdrop_path}
+                />
+              ))}
         </div>
       </div>
     </div>

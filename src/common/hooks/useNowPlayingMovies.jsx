@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { API_OPTIONS } from "../utils/constants";
 import { setNowPlayingMovies } from "../store/moviesSlice";
-import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const useNowPlayingMovies = () => {
   const dispatch = useDispatch();
@@ -17,12 +17,14 @@ const useNowPlayingMovies = () => {
     const apiData = await apiRead.json();
 
     dispatch(setNowPlayingMovies(apiData?.results || []));
+    return apiData?.results || [];
   };
 
-  useEffect(() => {
-    if (!!nowPlayingMovies && nowPlayingMovies.length > 0) return;
-    getNowPlayingMovies();
-  }, []);
+  return useQuery({
+    queryKey: ["now-playing-movies"],
+    queryFn: getNowPlayingMovies,
+    enabled: !nowPlayingMovies || nowPlayingMovies.length === 0,
+  });
 };
 
 export default useNowPlayingMovies;
